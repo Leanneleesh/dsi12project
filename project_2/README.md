@@ -64,23 +64,23 @@ The final test and train data sets can be found as [train_clean.csv](./datasets/
 
 ##### <u>Cost per Square Foot</u>
 
-Generalise the square foot of each property as sum of Tot Bsmt SF and Gr Liv Area to evaluate cost per sq ft. This feature is purely for visualisation and will not be used as a predictor as the feature takes in SalePrice (which is the target value).
+Generalise the square foot of each property as sum of Tot Bsmt SF and Gr Liv Area to evaluate cost per sq ft. This feature is purely for visualization and will not be used as a predictor as the feature takes in Sale Price.
 
 ##### <u>No Remod</u>
 
-Compare the number of houses that were remodified. 
+Compares Year Built and Year Remod/Add to find the number of houses that were remodified. 
 
 ##### <u>Years Before Sale</u>
 
-Number of years between YearBuilt and YrSold
+Number of years between YearBuilt and YrSold to determine age of house at time of sale.
 
 ##### <u>Total Porch SF</u>
 
-Created from Open Porch SF, Enclosed Porch, 3SsnPorch and Screen Porch 
+The sum of Open Porch SF, Enclosed Porch, 3SsnPorch and Screen Porch 
 
 ##### <u>Total Baths</u>
 
-Created from Full Bath, Half Bath, Bsmt Full Bath, Bsmt Half Bath
+The sum of Full Bath, Half Bath, Bsmt Full Bath, Bsmt Half Bath
 
 
 
@@ -89,10 +89,9 @@ Created from Full Bath, Half Bath, Bsmt Full Bath, Bsmt Half Bath
 ##### General Approach: 
 
 1. Run one round of modeling using Linear Regression, Lasso and Ridge
-
-2. Lasso was used for further feature selection and fine-tuning
-
-3. Train-test-split will be applied on train set for model validation and selection
+2. Lasso was used for further feature selection and fine-tuning, 2 other models were created using the Top 20 and Top 30 features for comparison 
+3. Final regression model was created using the Top 20 features where the Top 5 features were squared
+4. Train-test-split will be applied on train set for model validation and selection
 
 ##### Metrics Used to Validate Model:
 
@@ -116,8 +115,10 @@ Created from Full Bath, Half Bath, Bsmt Full Bath, Bsmt Half Bath
 
 | S/N  | Description                                                  | Public Score |
 | ---- | ------------------------------------------------------------ | :----------: |
-| 1    | Final Model  (Lasso Model with Top 20 Features where Top 5 were squared) |    26638     |
-|      |                                                              |              |
+| 1    | Final Model  (Lasso: Top 20 Features where Top 5 were squared) |    26638     |
+| 2    | Model (Ridge: Top 30 Features)                               |    27369     |
+| 3    | Model (Lasso: Top 20 Features)                               |    38035     |
+| 4    | Model (Ridge: 112 Features)                                  |    36061     |
 
 
 
@@ -125,7 +126,7 @@ Created from Full Bath, Half Bath, Bsmt Full Bath, Bsmt Half Bath
 
 1. The use of Lasso and Ridge performed better at the onset when there were too many features (100 over) which resulted in the Linear Regression Model overfitting 
 
-2. Gr Liv Area stood out as the feature with the greatest weightage on sale price.
+2. Gr Liv Area stood out as the feature with the greatest weightage on sale price
 
 3. As seen from the improvement in R^2 scores when the top 5 features were squared, it may be worth exploring polynomial features for other specific features to see if it improves the model
 
@@ -133,5 +134,5 @@ Created from Full Bath, Half Bath, Bsmt Full Bath, Bsmt Half Bath
 
 - Neighborhood seems to have a significant effect on sale price and can be studied in further detail
 - Considering further combining similar features such as exter qual and  overall qual to form an overall quality score
-- Exclude KitchenAbvGr as almost all of the houses have 1 kitchen and this may not be useful for the model to discern how this feature affects sale price. This is corroborated from the findings of the negative Lasso coefficient
+- Exclude KitchenAbvGr as almost all of the houses have 1 kitchen and this may not be useful for the model to discern how this feature affects sale price. This is corroborated from the findings where the Lasso coefficient for this feature was negative
 
